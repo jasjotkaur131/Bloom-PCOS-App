@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom — PCOS Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --rose: #E86F85;
+            --rose-light: #FFF0F2;
+            --plum: #6B4E71;
+            --plum-light: #F4F0F6;
+            --sage: #7A9E7E;
+            --sage-light: #F1F6F2;
+            --cream: #FFFDFB;
+        }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--cream);
+            color: #2D2D2D;
+        }
+        .font-serif { font-family: 'DM Serif Display', serif; }
+        .bg-rose { background-color: var(--rose); }
+        .text-rose { color: var(--rose); }
+        .bg-rose-light { background-color: var(--rose-light); }
+        .bg-plum { background-color: var(--plum); }
+        .text-plum { color: var(--plum); }
+        .bg-plum-light { background-color: var(--plum-light); }
+        .bg-sage { background-color: var(--sage); }
+        .text-sage { color: var(--sage); }
+        .bg-sage-light { background-color: var(--sage-light); }
+        .shadow-bloom { box-shadow: 0 10px 30px -10px rgba(107, 78, 113, 0.1); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-bloom">
+        <div class="max-w-[660px] mx-auto flex items-center px-4">
+            <div class="font-serif text-lg text-rose py-4 pr-4 border-r border-gray-100 mr-2 whitespace-nowrap">
+                🌸 Bloom
+            </div>
+            <div class="flex overflow-x-auto no-scrollbar gap-4 flex-1 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <span class="text-rose border-b-2 border-rose pb-4">Home</span>
+                <span class="whitespace-nowrap">Risk Score</span>
+                <span class="whitespace-nowrap">Symptoms</span>
+                <span class="whitespace-nowrap">Diet</span>
+                <span class="whitespace-nowrap">AI Chat</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-[660px] w-full mx-auto p-5 pb-20 space-y-6">
+        
+        <!-- Hero -->
+        <div class="bg-gradient-to-br from-plum to-rose rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
+            <div class="relative z-10">
+                <h2 class="font-serif text-2xl mb-1">Hello, how are you today?</h2>
+                <p class="text-white/80 text-sm">Your intelligent PCOS companion — track, understand & act.</p>
+            </div>
+            <div class="absolute -right-4 -top-4 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+        </div>
+
+        <!-- Privacy Banner -->
+        <div class="bg-plum-light border border-purple-100 rounded-2xl p-4 flex items-center gap-3">
+            <i data-lucide="shield-check" class="w-5 h-5 text-plum"></i>
+            <p class="text-[11px] leading-tight text-plum font-medium">
+                <strong>Privacy by design:</strong> This is a shareable export. For full AI features and lab analysis, use the live web version.
+            </p>
+        </div>
+
+        <!-- Grid Tiles -->
+        <div class="grid grid-cols-2 gap-3">
+            <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-bloom">
+                <i data-lucide="brain" class="w-6 h-6 text-rose mb-2"></i>
+                <div class="font-bold text-sm mb-0.5">ML Risk Score</div>
+                <div class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Check your risk</div>
+            </div>
+            <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-bloom">
+                <i data-lucide="clipboard-list" class="w-6 h-6 text-rose mb-2"></i>
+                <div class="font-bold text-sm mb-0.5">Log Symptoms</div>
+                <div class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">15+ markers</div>
+            </div>
+            <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-bloom">
+                <i data-lucide="calendar" class="w-6 h-6 text-rose mb-2"></i>
+                <div class="font-bold text-sm mb-0.5">Cycle Tracker</div>
+                <div class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Monitor period</div>
+            </div>
+            <div class="bg-white border border-gray-100 rounded-2xl p-4 shadow-bloom">
+                <i data-lucide="utensils" class="w-6 h-6 text-rose mb-2"></i>
+                <div class="font-bold text-sm mb-0.5">Diet & Guidance</div>
+                <div class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Personalised</div>
+            </div>
+        </div>
+
+        <!-- Recent Logs Section -->
+        <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-bloom">
+            <h3 class="font-serif text-lg mb-4">Recent Activity</h3>
+            <div class="space-y-3">
+                <div class="border-l-4 border-rose bg-white rounded-r-xl p-3 shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-[10px] font-bold text-rose uppercase tracking-wider">Today · Pain: 2/10</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="bg-rose-light text-rose text-[10px] px-2 py-0.5 rounded-full font-medium">Bloating</span>
+                        <span class="bg-rose-light text-rose text-[10px] px-2 py-0.5 rounded-full font-medium">Fatigue</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="bg-sage-light border border-sage-mid rounded-2xl p-6 text-center">
+            <h3 class="font-serif text-xl text-sage mb-2">Ready for full analysis?</h3>
+            <p class="text-sm text-sage/80 mb-6">Access the live version for AI Lab Analysis, Smart Recipes, and Specialist Finding.</p>
+            <a href="https://ais-pre-qpwygcywsgzripio5lqujx-166333492435.asia-southeast1.run.app" class="inline-block bg-sage text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-sage/20">Open Live App</a>
+        </div>
+
+    </main>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>

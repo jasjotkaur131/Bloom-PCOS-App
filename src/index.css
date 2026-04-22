@@ -1,0 +1,34 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+
+@theme {
+  --font-serif: "DM Serif Display", serif;
+  --font-sans: "DM Sans", sans-serif;
+  
+  --color-rose: #E8647A;
+  --color-rose-light: #FFF0F2;
+  --color-rose-mid: #F5C0C8;
+  --color-plum: #7C5C8A;
+  --color-plum-light: #F3EEF7;
+  --color-plum-mid: #C9B4D4;
+  --color-sage: #4E8C6E;
+  --color-sage-light: #EBF5EF;
+  --color-sage-mid: #A8D4BB;
+  --color-amber: #C97D20;
+  --color-amber-light: #FFF8ED;
+  --color-cream: #FDF8F4;
+  --color-text-main: #2A1F2E;
+  --color-text-secondary: #6B5A72;
+  --color-text-muted: #A898AE;
+  --color-border-main: #EDE0F0;
+}
+
+@layer base {
+  body {
+    @apply bg-cream text-text-main font-sans;
+  }
+}
+
+.shadow-bloom {
+  box-shadow: 0 2px 16px rgba(124, 92, 138, 0.08);
+}

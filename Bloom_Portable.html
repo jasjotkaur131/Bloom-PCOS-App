@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloom — PCOS Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --rose: #E86F85;
+            --rose-light: #FFF0F2;
+            --plum: #6B4E71;
+            --plum-light: #F4F0F6;
+            --sage: #7A9E7E;
+            --sage-light: #F1F6F2;
+            --cream: #FFFDFB;
+        }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--cream);
+            color: #2D2D2D;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .font-serif { font-family: 'DM Serif Display', serif; }
+        .bg-rose { background-color: var(--rose); }
+        .text-rose { color: var(--rose); }
+        .bg-rose-light { background-color: var(--rose-light); }
+        .bg-plum { background-color: var(--plum); }
+        .text-plum { color: var(--plum); }
+        .bg-plum-light { background-color: var(--plum-light); }
+        .bg-sage { background-color: var(--sage); }
+        .text-sage { color: var(--sage); }
+        .bg-sage-light { background-color: var(--sage-light); }
+        .shadow-bloom { box-shadow: 0 10px 30px -10px rgba(107, 78, 113, 0.1); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        .tab-active {
+            color: var(--rose);
+            border-bottom: 2px solid var(--rose);
+        }
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        input[type="range"] {
+            accent-color: var(--rose);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-bloom">
+        <div class="max-w-[660px] mx-auto flex items-center px-4">
+            <div class="font-serif text-lg text-rose py-4 pr-4 border-r border-gray-100 mr-2 whitespace-nowrap cursor-pointer" onclick="showPage('home')">
+                🌸 Bloom
+            </div>
+            <div id="nav-tabs" class="flex overflow-x-auto no-scrollbar gap-6 flex-1 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                <button onclick="showPage('home')" class="nav-item tab-active whitespace-nowrap">Home</button>
+                <button onclick="showPage('risk')" class="nav-item whitespace-nowrap">Risk Score</button>
+                <button onclick="showPage('symptoms')" class="nav-item whitespace-nowrap">Symptoms</button>
+                <button onclick="showPage('cycle')" class="nav-item whitespace-nowrap">Cycle</button>
+                <button onclick="showPage('diet')" class="nav-item whitespace-nowrap">Diet</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-[660px] w-full mx-auto p-5 pb-24">
+        
+        <!-- HOME PAGE -->
+        <div id="page-home" class="page active space-y-6">
+            <div class="bg-gradient-to-br from-plum to-rose rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
+                <div class="relative z-10">
+                    <h2 class="font-serif text-2xl mb-1">Hello, how are you today?</h2>
+                    <p class="text-white/80 text-sm">Your intelligent PCOS companion — track, understand & act.</p>
+                </div>
+                <div class="absolute -right-4 -top-4 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+            </div>
+
+            <div class="bg-plum-light border border-purple-100 rounded-2xl p-4 flex items-center gap-3">
+                <i data-lucide="shield-check" class="w-5 h-5 text-plum"></i>
+                <p class="text-[11px] leading-tight text-plum font-medium">
+                    <strong>Privacy by design:</strong> No login required. All data stays on your device.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div onclick="showPage('risk')" class="bg-white border border-gray-100 rounded-2xl p-4 shadow-bloom cursor-pointer hover:border-rose transition-all">
+                    <i data-lucide="brain" class="w-6 h-6 text-rose mb-2"></i>
+                    <div class="font-bold text-sm mb-0.5">ML Risk Score</div>
+                    <div class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Check your risk</div>
+                </div>
+                <div onclick="showPage('symptoms')" class="bg-white border border-gray-100 rounded-2xl p-4 shadow-bloom cursor-pointer hover:border-rose transition-all">
+                    <i data-lucide="clipboard-list" class="w-6 h-6 text-rose mb-2"></i>
+                    <div class="font-bold text-sm mb-0.5">Log Symptoms</div>
+                    <div class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Daily tracking</div>
+                </div>
+                <div onclick="showPage('cycle')" class="bg-white border border-gray-100 rounded-2xl p-4 shadow-bloom cursor-pointer hover:border-rose transition-all">
+                    <i data-lucide="calendar" class="w-6 h-6 text-rose mb-2"></i>
+                    <div class="font-bold text-sm mb-0.5">Cycle Tracker</div>
+                    <div class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Monitor period</div>
+                </div>
+                <div onclick="showPage('diet')" class="bg-white border border-gray-100 rounded-2xl p-4 shadow-bloom cursor-pointer hover:border-rose transition-all">
+                    <i data-lucide="utensils" class="w-6 h-6 text-rose mb-2"></i>
+                    <div class="font-bold text-sm mb-0.5">Diet & Guidance</div>
+                    <div class="text-[10px] text-gray-400 font-medium uppercase tracking-wider">Personalised</div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-bloom">
+                <h3 class="font-serif text-lg mb-4">Daily Insight</h3>
+                <div class="p-4 bg-rose-light border border-rose-mid rounded-xl">
+                    <p class="text-xs text-rose leading-relaxed font-medium">
+                        ✨ <strong>Tip:</strong> Drinking spearmint tea twice a day has been shown to help reduce excess androgen levels in women with PCOS.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RISK SCORE PAGE -->
+        <div id="page-risk" class="page space-y-6">
+            <h2 class="font-serif text-2xl px-2">ML Risk Assessment</h2>
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-bloom space-y-4">
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Age</label>
+                    <input type="number" id="risk-age" value="24" class="w-full border border-gray-100 rounded-xl px-4 py-2 text-sm outline-none focus:border-rose">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">BMI (Weight/Height²)</label>
+                    <input type="number" id="risk-bmi" value="22.5" class="w-full border border-gray-100 rounded-xl px-4 py-2 text-sm outline-none focus:border-rose">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Cycle Length (Days)</label>
+                    <input type="number" id="risk-cycle" value="28" class="w-full border border-gray-100 rounded-xl px-4 py-2 text-sm outline-none focus:border-rose">
+                </div>
+                <button onclick="calculateRisk()" class="w-full bg-rose text-white py-3 rounded-xl font-bold shadow-lg shadow-rose/20 mt-4">Calculate Risk</button>
+            </div>
+            
+            <div id="risk-result" class="hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+                <div class="bg-plum text-white rounded-2xl p-6 shadow-bloom text-center">
+                    <div id="risk-level" class="text-[10px] font-bold uppercase tracking-widest mb-2">Low Risk</div>
+                    <div id="risk-prob" class="font-serif text-4xl mb-2">12%</div>
+                    <p class="text-xs text-white/70">Probability based on your markers</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SYMPTOMS PAGE -->
+        <div id="page-symptoms" class="page space-y-6">
+            <h2 class="font-serif text-2xl px-2">Log Symptoms</h2>
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-bloom space-y-6">
+                <div>
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">Select Symptoms</p>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="this.classList.toggle('bg-rose'); this.classList.toggle('text-white')" class="px-3 py-1.5 border border-gray-100 rounded-full text-xs font-medium transition-all">Irregular Periods</button>
+                        <button onclick="this.classList.toggle('bg-rose'); this.classList.toggle('text-white')" class="px-3 py-1.5 border border-gray-100 rounded-full text-xs font-medium transition-all">Acne</button>
+                        <button onclick="this.classList.toggle('bg-rose'); this.classList.toggle('text-white')" class="px-3 py-1.5 border border-gray-100 rounded-full text-xs font-medium transition-all">Hair Thinning</button>
+                        <button onclick="this.classList.toggle('bg-rose'); this.classList.toggle('text-white')" class="px-3 py-1.5 border border-gray-100 rounded-full text-xs font-medium transition-all">Fatigue</button>
+                        <button onclick="this.classList.toggle('bg-rose'); this.classList.toggle('text-white')" class="px-3 py-1.5 border border-gray-100 rounded-full text-xs font-medium transition-all">Bloating</button>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-2">Pain Level (0-10)</label>
+                    <input type="range" min="0" max="10" value="3" class="w-full">
+                </div>
+                <button onclick="alert('Log saved locally!')" class="w-full bg-rose text-white py-3 rounded-xl font-bold shadow-lg shadow-rose/20">Save Daily Log</button>
+            </div>
+        </div>
+
+        <!-- CYCLE PAGE -->
+        <div id="page-cycle" class="page space-y-6">
+            <h2 class="font-serif text-2xl px-2">Cycle Tracker</h2>
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-bloom">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="font-serif text-lg">April 2026</h3>
+                </div>
+                <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-gray-400 uppercase mb-2">
+                    <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                </div>
+                <div class="grid grid-cols-7 gap-1">
+                    <!-- Simple Calendar Mock -->
+                    <div class="aspect-square flex items-center justify-center text-xs opacity-20">29</div>
+                    <div class="aspect-square flex items-center justify-center text-xs opacity-20">30</div>
+                    <div class="aspect-square flex items-center justify-center text-xs opacity-20">31</div>
+                    <div class="aspect-square flex items-center justify-center text-xs bg-rose text-white rounded-lg">1</div>
+                    <div class="aspect-square flex items-center justify-center text-xs bg-rose text-white rounded-lg">2</div>
+                    <div class="aspect-square flex items-center justify-center text-xs bg-rose text-white rounded-lg">3</div>
+                    <div class="aspect-square flex items-center justify-center text-xs bg-rose text-white rounded-lg">4</div>
+                    <div class="aspect-square flex items-center justify-center text-xs bg-rose text-white rounded-lg">5</div>
+                    <div class="aspect-square flex items-center justify-center text-xs">6</div>
+                    <div class="aspect-square flex items-center justify-center text-xs">7</div>
+                    <div class="aspect-square flex items-center justify-center text-xs">8</div>
+                    <div class="aspect-square flex items-center justify-center text-xs">9</div>
+                    <div class="aspect-square flex items-center justify-center text-xs">10</div>
+                    <div class="aspect-square flex items-center justify-center text-xs">11</div>
+                    <div class="aspect-square flex items-center justify-center text-xs border-2 border-rose text-rose font-bold rounded-lg">12</div>
+                    <div class="aspect-square flex items-center justify-center text-xs">13</div>
+                    <div class="aspect-square flex items-center justify-center text-xs bg-sage-light text-sage rounded-lg">14</div>
+                    <div class="aspect-square flex items-center justify-center text-xs bg-sage-light text-sage rounded-lg">15</div>
+                    <div class="aspect-square flex items-center justify-center text-xs bg-sage-light text-sage rounded-lg">16</div>
+                    <div class="aspect-square flex items-center justify-center text-xs bg-sage-light text-sage rounded-lg">17</div>
+                    <div class="aspect-square flex items-center justify-center text-xs">18</div>
+                </div>
+                <div class="mt-6 flex gap-4 text-[10px] font-bold uppercase tracking-wider">
+                    <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 bg-rose rounded-full"></div> Period</div>
+                    <div class="flex items-center gap-1.5"><div class="w-2.5 h-2.5 bg-sage-light border border-sage rounded-full"></div> Fertile</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIET PAGE -->
+        <div id="page-diet" class="page space-y-6">
+            <h2 class="font-serif text-2xl px-2">Diet Guidance</h2>
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-bloom space-y-4">
+                <div class="flex items-start gap-4 p-4 bg-sage-light rounded-2xl">
+                    <i data-lucide="leaf" class="w-6 h-6 text-sage shrink-0"></i>
+                    <div>
+                        <h4 class="font-bold text-sm text-sage">Embrace Low GI</h4>
+                        <p class="text-xs text-sage/80 leading-relaxed">Focus on complex carbs like oats, quinoa, and non-starchy vegetables to manage insulin levels.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-rose-light rounded-2xl">
+                    <i data-lucide="utensils" class="w-6 h-6 text-rose shrink-0"></i>
+                    <div>
+                        <h4 class="font-bold text-sm text-rose">Anti-Inflammatory</h4>
+                        <p class="text-xs text-rose/80 leading-relaxed">Incorporate omega-3 rich foods like walnuts, flaxseeds, and fatty fish to reduce internal inflammation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Nav Hint -->
+    <div class="fixed bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-rose via-plum to-sage opacity-30"></div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Navigation Logic
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Show target page
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            // Update tabs
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('tab-active');
+                if (btn.innerText.toLowerCase() === pageId || (pageId === 'home' && btn.innerText === 'Home')) {
+                    btn.classList.add('tab-active');
+                }
+            });
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Risk Calculation Logic
+        function calculateRisk() {
+            const age = document.getElementById('risk-age').value;
+            const bmi = document.getElementById('risk-bmi').value;
+            const cycle = document.getElementById('risk-cycle').value;
+            
+            // Simple logic for the demo
+            let prob = 10;
+            if (bmi > 25) prob += 20;
+            if (cycle > 35 || cycle < 21) prob += 30;
+            if (age > 30) prob += 5;
+            
+            document.getElementById('risk-prob').innerText = prob + '%';
+            document.getElementById('risk-level').innerText = prob > 40 ? 'High Risk' : (prob > 20 ? 'Medium Risk' : 'Low Risk');
+            document.getElementById('risk-result').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
