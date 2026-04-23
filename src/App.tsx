@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Home from './components/Home';
 import RiskScore from './components/RiskScore';
 import Symptoms from './components/Symptoms';
@@ -14,9 +14,14 @@ import Community from './components/Community';
 import HealthReport from './components/HealthReport';
 import { RiskData, SymptomLog, LabResult, Medication } from './types';
 import { motion, AnimatePresence } from 'motion/react';
+import { User } from 'firebase/auth';
+import { onAuthStateChange, logOut } from './lib/auth';
+import Auth from './components/Auth';
 
 export default function App() {
   const [activePage, setActivePage] = useState('home');
+  const [user, setUser] = useState<User | null>(null);
+  const [authLoading, setAuthLoading] = useState(true);
   const [riskData, setRiskData] = useState<RiskData | null>(null);
   const [logs, setLogs] = useState<SymptomLog[]>([]);
   const [labs, setLabs] = useState<LabResult[]>([]);
@@ -32,6 +37,14 @@ export default function App() {
   const handleSaveLog = (log: SymptomLog) => {
     setLogs(prev => [log, ...prev]);
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChange((currentUser) => {
+      setUser(currentUser);
+      setAuthLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const renderPage = () => {
     switch (activePage) {
@@ -68,6 +81,14 @@ export default function App() {
     { id: 'report', label: 'Report' },
   ];
 
+  if (authLoading) {
+    return <div className="min-h-screen bg-cream flex items-center justify-center text-rose font-serif text-xl">Loading...</div>;
+  }
+
+  if (!user) {
+    return <Auth onSuccess={() => {}} />;
+  }
+
   return (
     <div className="min-h-screen bg-cream flex flex-col">
       {/* Navigation */}
@@ -94,6 +115,12 @@ export default function App() {
               </button>
             ))}
           </div>
+          <button
+            onClick={async () => await logOut()}
+            className="ml-4 px-3 py-2 bg-rose-light text-rose rounded-xl text-xs font-bold hover:bg-rose transition-colors hover:text-white whitespace-nowrap"
+          >
+            Log Out
+          </button>
         </div>
       </nav>
 
