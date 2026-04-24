@@ -36,38 +36,75 @@ export default function RiskScore({ onCalculate, currentRisk }: RiskScoreProps) 
     );
   };
 
-  const calculate = () => {
-    let score = 0;
-    const { bmi, cycleLength, sugar, testosterone, lhfsh } = formData;
+  const calculate = async () => {
+  let score = 0;
+  const { bmi, cycleLength, sugar, testosterone, lhfsh } = formData;
 
-    score += (bmi > 25) ? (bmi - 25) * 0.08 : 0;
-    score += (cycleLength > 35) ? 0.9 : (cycleLength > 32) ? 0.5 : (cycleLength < 21) ? 0.4 : 0;
-    score += (sugar > 100) ? 0.7 : (sugar > 95) ? 0.3 : 0;
-    score += (testosterone > 60) ? 0.9 : (testosterone > 50) ? 0.5 : 0;
-    score += (lhfsh > 2) ? 0.8 : (lhfsh > 1.8) ? 0.4 : 0;
+  score += (bmi > 25) ? (bmi - 25) * 0.08 : 0;
+  score += (cycleLength > 35) ? 0.9 : (cycleLength > 32) ? 0.5 : (cycleLength < 21) ? 0.4 : 0;
+  score += (sugar > 100) ? 0.7 : (sugar > 95) ? 0.3 : 0;
+  score += (testosterone > 60) ? 0.9 : (testosterone > 50) ? 0.5 : 0;
+  score += (lhfsh > 2) ? 0.8 : (lhfsh > 1.8) ? 0.4 : 0;
 
-    if (selectedSymptoms.includes('irreg')) score += 0.8;
-    if (selectedSymptoms.includes('acne')) score += 0.3;
-    if (selectedSymptoms.includes('hair')) score += 0.5;
-    if (selectedSymptoms.includes('thin')) score += 0.4;
-    if (selectedSymptoms.includes('weight')) score += 0.4;
-    if (selectedSymptoms.includes('cysts')) score += 1.2;
-    if (selectedSymptoms.includes('insulin')) score += 0.9;
-    if (selectedSymptoms.includes('fatigue')) score += 0.2;
+  if (selectedSymptoms.includes('irreg')) score += 0.8;
+  if (selectedSymptoms.includes('acne')) score += 0.3;
+  if (selectedSymptoms.includes('hair')) score += 0.5;
+  if (selectedSymptoms.includes('thin')) score += 0.4;
+  if (selectedSymptoms.includes('weight')) score += 0.4;
+  if (selectedSymptoms.includes('cysts')) score += 1.2;
+  if (selectedSymptoms.includes('insulin')) score += 0.9;
+  if (selectedSymptoms.includes('fatigue')) score += 0.2;
 
-    const prob = 1 / (1 + Math.exp(-score + 2.5));
-    let level: 'low' | 'medium' | 'high' = 'low';
-    if (prob < 0.35) level = 'low';
-    else if (prob < 0.65) level = 'medium';
-    else level = 'high';
+  const prob = 1 / (1 + Math.exp(-score + 2.5));
+  let level: 'low' | 'medium' | 'high' = 'low';
+  if (prob < 0.35) level = 'low';
+  else if (prob < 0.65) level = 'medium';
+  else level = 'high';
 
-    onCalculate({
-      ...formData,
-      symptoms: selectedSymptoms.map(id => symptoms.find(s => s.id === id)?.label || id),
-      probability: prob,
-      level
+  // Show result immediately to user (same as before)
+  onCalculate({
+    ...formData,
+    symptoms: selectedSymptoms.map(id => symptoms.find(s => s.id === id)?.label || id),
+    probability: prob,
+    level
+  });
+
+  // Save to Supabase in background (won't affect UI if it fails)
+  try {
+    const SUPABASE_URL = "https://odvnredkdodvxvtirwtg.supabase.co";
+    const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kdm5yZWRrZG9kdnh2dGlyd3RnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY2NDg1MDAsImV4cCI6MjA5MjIyNDUwMH0.MCDLSKnghJfk1vDZ-hZpeoIgDEsg9r_XxlzxsedA620";
+
+    await fetch(`${SUPABASE_URL}/functions/v1/predict-pcos-risk`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": ANON_KEY,
+        "Authorization": `Bearer ${ANON_KEY}`
+      },
+      body: JSON.stringify({
+        age: formData.age,
+        height_cm: 160,           // default since form doesn't collect height
+        weight_kg: formData.bmi * 2.56, // estimated from BMI
+        menstrual_cycle_regular: !selectedSymptoms.includes('irreg'),
+        avg_cycle_length_days: formData.cycleLength,
+        symptom_acne: selectedSymptoms.includes('acne'),
+        symptom_hairfall: selectedSymptoms.includes('thin'),
+        symptom_excess_facial_hair: selectedSymptoms.includes('hair'),
+        symptom_weight_gain: selectedSymptoms.includes('weight'),
+        symptom_irregular_period: selectedSymptoms.includes('irreg'),
+        symptom_mood_swings: false,
+        exercise_frequency: "Rarely",
+        sleep_hours: "7-9 hours",
+        stress_level: 3,
+        junk_food_frequency: "Occasionally",
+      })
     });
-  };
+    console.log("Saved to Supabase successfully");
+  } catch (err) {
+    console.log("Supabase save failed silently:", err);
+  }
+};
+
 
   return (
     <div className="flex flex-col gap-6">
