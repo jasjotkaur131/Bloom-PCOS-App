@@ -1,29 +1,34 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const ai = new GoogleGenAI({ 
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY || "" 
+});
 
-export const model = "gemini-3-flash-preview";
-
-export async function generateText(prompt: string, systemInstruction?: string) {
+export async function generateText(
+  prompt: string,
+  systemInstruction?: string
+): Promise<string> {
   try {
     const response = await ai.models.generateContent({
-      model,
+      model: "gemini-2.0-flash",
       contents: prompt,
-      config: {
-        systemInstruction,
-      },
+      config: { systemInstruction },
     });
-    return response.text;
+    return response.text || "No response. Please try again.";
   } catch (error) {
-    console.error("Gemini API Error:", error);
-    return "I'm sorry, I encountered an error while processing your request. Please try again later.";
+    console.error("Gemini Error:", error);
+    return "Something went wrong. Please try again.";
   }
 }
 
-export async function generateJSON(prompt: string, schema: any, systemInstruction?: string) {
+export async function generateJSON(
+  prompt: string,
+  schema: any,
+  systemInstruction?: string
+): Promise<any> {
   try {
     const response = await ai.models.generateContent({
-      model,
+      model: "gemini-2.0-flash",
       contents: prompt,
       config: {
         systemInstruction,
@@ -33,37 +38,34 @@ export async function generateJSON(prompt: string, schema: any, systemInstructio
     });
     return JSON.parse(response.text || "{}");
   } catch (error) {
-    console.error("Gemini API JSON Error:", error);
+    console.error("Gemini JSON Error:", error);
     return null;
   }
 }
 
-export async function analyzeImage(base64Image: string, prompt: string, schema?: any) {
+export async function analyzeImage(
+  base64Image: string,
+  prompt: string,
+  schema?: any
+): Promise<any> {
   try {
-    const imagePart = {
-      inlineData: {
-        mimeType: "image/jpeg",
-        data: base64Image,
-      },
-    };
-    const textPart = {
-      text: prompt,
-    };
     const response = await ai.models.generateContent({
-      model,
-      contents: { parts: [imagePart, textPart] },
+      model: "gemini-2.0-flash",
+      contents: {
+        parts: [
+          { inlineData: { mimeType: "image/jpeg", data: base64Image } },
+          { text: prompt },
+        ],
+      },
       config: schema ? {
         responseMimeType: "application/json",
         responseSchema: schema,
       } : undefined,
     });
-    
-    if (schema) {
-      return JSON.parse(response.text || "{}");
-    }
+    if (schema) return JSON.parse(response.text || "{}");
     return response.text;
   } catch (error) {
-    console.error("Gemini API Image Error:", error);
+    console.error("Gemini Image Error:", error);
     return null;
   }
 }

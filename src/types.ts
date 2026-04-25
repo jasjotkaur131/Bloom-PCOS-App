@@ -18,6 +18,31 @@ export interface RiskData {
   symptoms: string[];
   probability: number;
   level: 'low' | 'medium' | 'high';
+  modelVersion: string;        
+  factors: {                   
+    hormonal: number;
+    metabolic: number;
+    cyclical: number;
+    androgenic: number;
+  };
+}
+export interface RiskData {
+  age: number;
+  bmi: number;
+  cycleLength: number;
+  sugar: number;
+  testosterone: number;
+  lhfsh: number;
+  symptoms: string[];
+  probability: number;
+  level: 'low' | 'medium' | 'high';
+  modelVersion: string;        
+  factors: {                   
+    hormonal: number;
+    metabolic: number;
+    cyclical: number;
+    androgenic: number;
+  };
 }
 
 export interface Doctor {

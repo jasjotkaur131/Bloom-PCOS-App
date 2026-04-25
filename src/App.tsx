@@ -16,6 +16,7 @@ import { RiskData, SymptomLog, LabResult, Medication } from './types';
 import { motion, AnimatePresence } from 'motion/react';
 import { User } from 'firebase/auth';
 import { onAuthStateChange, logOut } from './lib/auth';
+import { signUp } from './lib/auth';
 import Auth from './components/Auth';
 
 export default function App() {

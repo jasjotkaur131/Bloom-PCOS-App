@@ -32,11 +32,9 @@ export default function Auth({ onSuccess }: AuthProps) {
     }
 
     if (result.error) {
-      // Map firebase errors to friendlier messages if desired, or just show the error
       setError(result.error);
       setLoading(false);
     } else {
-      // Success, call onSuccess
       setLoading(false);
       onSuccess();
     }

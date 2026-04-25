@@ -10,7 +10,6 @@ import app from '../firebase';
 
 export const auth = getAuth(app);
 
-// Sign up
 export const signUp = async (email: string, password: string) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -20,7 +19,6 @@ export const signUp = async (email: string, password: string) => {
   }
 };
 
-// Log in
 export const logIn = async (email: string, password: string) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -34,7 +32,6 @@ export const logIn = async (email: string, password: string) => {
   }
 };
 
-// Log out
 export const logOut = async () => {
   try {
     await signOut(auth);
@@ -44,7 +41,6 @@ export const logOut = async () => {
   }
 };
 
-// Auth State Observer
 export const onAuthStateChange = (callback: (user: User | null) => void) => {
   return onAuthStateChanged(auth, callback);
 };
