@@ -50,7 +50,6 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Navigation -->
     <nav class="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-bloom">
         <div class="max-w-[660px] mx-auto flex items-center px-4">
             <div class="font-serif text-lg text-rose py-4 pr-4 border-r border-gray-100 mr-2 whitespace-nowrap cursor-pointer" onclick="showPage('home')">
@@ -66,10 +65,8 @@
         </div>
     </nav>
 
-    <!-- Main Content -->
     <main class="flex-1 max-w-[660px] w-full mx-auto p-5 pb-24">
         
-        <!-- HOME PAGE -->
         <div id="page-home" class="page active space-y-6">
             <div class="bg-gradient-to-br from-plum to-rose rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
                 <div class="relative z-10">
@@ -113,13 +110,12 @@
                 <h3 class="font-serif text-lg mb-4">Daily Insight</h3>
                 <div class="p-4 bg-rose-light border border-rose-mid rounded-xl">
                     <p class="text-xs text-rose leading-relaxed font-medium">
-                        ✨ <strong>Tip:</strong> Drinking spearmint tea twice a day has been shown to help reduce excess androgen levels in women with PCOS.
+                         <strong>Tip:</strong> Drinking spearmint tea twice a day has been shown to help reduce excess androgen levels in women with PCOS.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- RISK SCORE PAGE -->
         <div id="page-risk" class="page space-y-6">
             <h2 class="font-serif text-2xl px-2">ML Risk Assessment</h2>
             <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-bloom space-y-4">
@@ -147,7 +143,6 @@
             </div>
         </div>
 
-        <!-- SYMPTOMS PAGE -->
         <div id="page-symptoms" class="page space-y-6">
             <h2 class="font-serif text-2xl px-2">Log Symptoms</h2>
             <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-bloom space-y-6">
@@ -169,7 +164,6 @@
             </div>
         </div>
 
-        <!-- CYCLE PAGE -->
         <div id="page-cycle" class="page space-y-6">
             <h2 class="font-serif text-2xl px-2">Cycle Tracker</h2>
             <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-bloom">
@@ -180,7 +174,6 @@
                     <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
                 </div>
                 <div class="grid grid-cols-7 gap-1">
-                    <!-- Simple Calendar Mock -->
                     <div class="aspect-square flex items-center justify-center text-xs opacity-20">29</div>
                     <div class="aspect-square flex items-center justify-center text-xs opacity-20">30</div>
                     <div class="aspect-square flex items-center justify-center text-xs opacity-20">31</div>
@@ -210,7 +203,6 @@
             </div>
         </div>
 
-        <!-- DIET PAGE -->
         <div id="page-diet" class="page space-y-6">
             <h2 class="font-serif text-2xl px-2">Diet Guidance</h2>
             <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-bloom space-y-4">
@@ -233,21 +225,15 @@
 
     </main>
 
-    <!-- Bottom Nav Hint -->
     <div class="fixed bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-rose via-plum to-sage opacity-30"></div>
 
     <script>
-        // Initialize Lucide icons
         lucide.createIcons();
 
-        // Navigation Logic
         function showPage(pageId) {
-            // Hide all pages
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            // Show target page
             document.getElementById('page-' + pageId).classList.add('active');
             
-            // Update tabs
             document.querySelectorAll('.nav-item').forEach(btn => {
                 btn.classList.remove('tab-active');
                 if (btn.innerText.toLowerCase() === pageId || (pageId === 'home' && btn.innerText === 'Home')) {
@@ -255,17 +241,14 @@
                 }
             });
             
-            // Scroll to top
             window.scrollTo(0, 0);
         }
 
-        // Risk Calculation Logic
         function calculateRisk() {
             const age = document.getElementById('risk-age').value;
             const bmi = document.getElementById('risk-bmi').value;
             const cycle = document.getElementById('risk-cycle').value;
             
-            // Simple logic for the demo
             let prob = 10;
             if (bmi > 25) prob += 20;
             if (cycle > 35 || cycle < 21) prob += 30;
